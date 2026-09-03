@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import {
   Calendar,
   Users,
+  User,
   Play,
   Check,
   ShieldCheck,
   Zap,
-  ChevronLeft,
-  ChevronRight,
   GraduationCap,
-  BookOpen,
   PenTool,
   MessageCircle,
   FileSearch,
   X,
   Sparkles,
+  Lock,
+  Menu,
 } from "lucide-react";
 
 // Pixel-perfect WhatsApp SVG Icon
@@ -39,18 +39,136 @@ function WhatsAppIcon({ className = "w-5 h-5", size = 20 }: { className?: string
 export default function HomePage() {
   const [selectedGoal, setSelectedGoal] = useState<string>("Speaking");
   const [selectedOption, setSelectedOption] = useState<"just-me" | "friend">("just-me");
-  const [firstName, setFirstName] = useState<string>("Othman");
-  const [lastName, setLastName] = useState<string>("Essaadi");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [friendFirstName, setFriendFirstName] = useState<string>("");
+  const [friendLastName, setFriendLastName] = useState<string>("");
+  const [friendPhone, setFriendPhone] = useState<string>("");
+  const [customMessage, setCustomMessage] = useState<string>("");
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState<boolean>(false);
+  const [modalFirstName, setModalFirstName] = useState<string>("");
+  const [modalLastName, setModalLastName] = useState<string>("");
+  const [modalFriendFirstName, setModalFriendFirstName] = useState<string>("");
+  const [modalFriendLastName, setModalFriendLastName] = useState<string>("");
+  const [modalFriendPhone, setModalFriendPhone] = useState<string>("");
+  const [modalCustomMsg, setModalCustomMsg] = useState<string>("");
 
-  const phoneNumber = "212600000000";
+  const phoneNumber = "212600211281";
 
-  const buildWhatsAppLink = () => {
-    const optionText = selectedOption === "just-me" ? "Just Me" : "Me + A Friend";
-    const message = `Hello Taha! I am ${firstName || "Student"} ${lastName || ""}. I would like to join the English with Taha program (${optionText}) for my goal: ${selectedGoal}. Please share the offer details!`;
+  const buildWhatsAppLink = (
+    overrideFirst?: string,
+    overrideLast?: string,
+    overrideFriendFirst?: string,
+    overrideFriendLast?: string,
+    overrideFriendPhone?: string,
+    overrideMsg?: string
+  ) => {
+    const f = (overrideFirst !== undefined ? overrideFirst : firstName).trim();
+    const l = (overrideLast !== undefined ? overrideLast : lastName).trim();
+    const student1 = f || l ? `${f} ${l}`.trim() : "Étudiant 1";
+
+    const ff = (overrideFriendFirst !== undefined ? overrideFriendFirst : friendFirstName).trim();
+    const fl = (overrideFriendLast !== undefined ? overrideFriendLast : friendLastName).trim();
+    const student2 = ff || fl ? `${ff} ${fl}`.trim() : "Ami(e) / Étudiant 2";
+    const fPhone = (overrideFriendPhone !== undefined ? overrideFriendPhone : friendPhone).trim();
+
+    const note = (overrideMsg !== undefined ? overrideMsg : customMessage).trim();
+
+    let lines: string[] = [];
+
+    if (selectedOption === "friend") {
+      lines = [
+        `Bonjour Taha ! 👋`,
+        ``,
+        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Me + A Friend) !`,
+        ``,
+        `👤 *Étudiant 1 :* ${student1}`,
+        `👥 *Étudiant 2 (Ami/e) :* ${student2}`,
+        `📞 *Numéro de l'ami(e) :* ${fPhone || "Non renseigné"}`,
+        ``,
+        `🎯 *Notre objectif :* ${selectedGoal}`,
+      ];
+    } else {
+      lines = [
+        `Bonjour Taha ! 👋`,
+        ``,
+        `Je m'appelle *${student1}*.`,
+        `Je souhaite rejoindre votre programme *English with Taha*.`,
+        ``,
+        `🎯 *Mon objectif :* ${selectedGoal}`,
+        `👥 *Formule :* Offre Individuelle (Just Me)`,
+      ];
+    }
+
+    if (note) {
+      lines.push(``, `💬 *Message :* ${note}`);
+    }
+
+    lines.push(
+      ``,
+      selectedOption === "friend"
+        ? `Pourriez-vous nous transmettre les détails de l'offre Duo et les disponibilités ? Merci !`
+        : `Pourriez-vous me transmettre les détails de l'offre et les disponibilités ? Merci !`
+    );
+
+    const message = lines.join("\n");
     return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+  };
+
+  const handleOpenWhatsApp = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    if (selectedOption === "just-me") {
+      if (firstName.trim() && lastName.trim()) {
+        window.open(buildWhatsAppLink(firstName, lastName, friendFirstName, friendLastName, friendPhone, customMessage), "_blank");
+      } else {
+        setModalFirstName(firstName);
+        setModalLastName(lastName);
+        setModalFriendFirstName(friendFirstName);
+        setModalFriendLastName(friendLastName);
+        setModalFriendPhone(friendPhone);
+        setModalCustomMsg(customMessage);
+        setIsWhatsAppModalOpen(true);
+      }
+    } else {
+      if (firstName.trim() && lastName.trim() && friendFirstName.trim() && friendLastName.trim()) {
+        window.open(buildWhatsAppLink(firstName, lastName, friendFirstName, friendLastName, friendPhone, customMessage), "_blank");
+      } else {
+        setModalFirstName(firstName);
+        setModalLastName(lastName);
+        setModalFriendFirstName(friendFirstName);
+        setModalFriendLastName(friendLastName);
+        setModalFriendPhone(friendPhone);
+        setModalCustomMsg(customMessage);
+        setIsWhatsAppModalOpen(true);
+      }
+    }
+  };
+
+  const handleConfirmWhatsAppModal = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!modalFirstName.trim()) return;
+    setFirstName(modalFirstName);
+    if (modalLastName.trim()) setLastName(modalLastName);
+    if (selectedOption === "friend") {
+      if (modalFriendFirstName.trim()) setFriendFirstName(modalFriendFirstName);
+      if (modalFriendLastName.trim()) setFriendLastName(modalFriendLastName);
+      if (modalFriendPhone.trim()) setFriendPhone(modalFriendPhone);
+    }
+    if (modalCustomMsg.trim()) setCustomMessage(modalCustomMsg);
+
+    window.open(
+      buildWhatsAppLink(
+        modalFirstName,
+        modalLastName,
+        modalFriendFirstName,
+        modalFriendLastName,
+        modalFriendPhone,
+        modalCustomMsg
+      ),
+      "_blank"
+    );
+    setIsWhatsAppModalOpen(false);
   };
 
   const goals = ["Speaking", "Career", "Studies", "Travel"];
@@ -62,13 +180,6 @@ export default function HomePage() {
       badgeClass: "badge-blue",
       title: "Vocabulary",
       desc: "Expand your vocabulary and use words confidently.",
-    },
-    {
-      id: "reading",
-      icon: <BookOpen className="w-5 h-5" />,
-      badgeClass: "badge-green",
-      title: "Reading",
-      desc: "Read and understand different texts with ease.",
     },
     {
       id: "writing",
@@ -100,6 +211,117 @@ export default function HomePage() {
     },
   ];
 
+  const [activeComponentIndex, setActiveComponentIndex] = useState<number>(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isInteractingRef = useRef<boolean>(false);
+  const interactionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const isPointerDownRef = useRef<boolean>(false);
+  const startXRef = useRef<number>(0);
+  const scrollStartRef = useRef<number>(0);
+
+  // Smooth scroll to target slide
+  const scrollToSlide = (index: number) => {
+    setActiveComponentIndex(index);
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const cards = container.querySelectorAll(".component-card");
+    const targetCard = cards[index] as HTMLElement;
+    if (targetCard) {
+      const scrollLeft =
+        targetCard.offsetLeft - (container.clientWidth - targetCard.clientWidth) / 2;
+      container.scrollTo({
+        left: Math.max(0, scrollLeft),
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // Auto-advance every 10 seconds with smooth animation
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Don't auto-rotate if the user is actively swiping
+      if (isInteractingRef.current) return;
+
+      setActiveComponentIndex((prev) => {
+        const next = (prev + 1) % componentsList.length;
+        if (carouselRef.current) {
+          const container = carouselRef.current;
+          const cards = container.querySelectorAll(".component-card");
+          const targetCard = cards[next] as HTMLElement;
+          if (targetCard) {
+            const scrollLeft =
+              targetCard.offsetLeft -
+              (container.clientWidth - targetCard.clientWidth) / 2;
+            container.scrollTo({
+              left: Math.max(0, scrollLeft),
+              behavior: "smooth",
+            });
+          }
+        }
+        return next;
+      });
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, [componentsList.length]);
+
+  // Handle manual scroll / swipe left and right
+  const handleCarouselScroll = () => {
+    if (!carouselRef.current) return;
+    const container = carouselRef.current;
+    const cards = container.querySelectorAll(".component-card");
+    const containerCenter = container.scrollLeft + container.clientWidth / 2;
+
+    let closestIndex = 0;
+    let minDistance = Infinity;
+
+    cards.forEach((card, idx) => {
+      const el = card as HTMLElement;
+      const cardCenter = el.offsetLeft + el.clientWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = idx;
+      }
+    });
+
+    setActiveComponentIndex(closestIndex);
+
+    // Pause auto-rotation for 5s after manual scroll
+    isInteractingRef.current = true;
+    if (interactionTimerRef.current) {
+      clearTimeout(interactionTimerRef.current);
+    }
+    interactionTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 5000);
+  };
+
+  // Pointer drag support for smooth dragging on both touch and mouse
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!carouselRef.current) return;
+    isPointerDownRef.current = true;
+    isInteractingRef.current = true;
+    startXRef.current = e.clientX;
+    scrollStartRef.current = carouselRef.current.scrollLeft;
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPointerDownRef.current || !carouselRef.current) return;
+    const dx = e.clientX - startXRef.current;
+    carouselRef.current.scrollLeft = scrollStartRef.current - dx;
+  };
+
+  const handlePointerUp = () => {
+    isPointerDownRef.current = false;
+    if (interactionTimerRef.current) {
+      clearTimeout(interactionTimerRef.current);
+    }
+    interactionTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 5000);
+  };
+
   return (
     <main className="page-container">
       {/* Top Header */}
@@ -108,74 +330,18 @@ export default function HomePage() {
           <Calendar className="w-4 h-4 text-blue-600" />
           <span>2026 / 2027 PROGRAM</span>
         </div>
-
         <button
-          className="menu-button"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle navigation menu"
+          className="mobile-menu-btn"
+          aria-label="Menu"
+          onClick={() => setIsWhatsAppModalOpen(true)}
         >
-          <span className="menu-line"></span>
-          <span className="menu-line"></span>
-          <span className="menu-line"></span>
+          <Menu className="w-5 h-5 text-slate-800" />
         </button>
       </header>
 
-      {/* Mobile Nav Drawer */}
-      {isMobileMenuOpen && (
-        <div className="modal-overlay" onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="mobile-nav-drawer" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-nav-header">
-              <div className="program-badge">
-                <Sparkles className="w-4 h-4 text-blue-600" />
-                <span>English with Taha</span>
-              </div>
-              <button
-                className="modal-close-btn"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <nav className="mobile-nav-links">
-              <a
-                href="#program"
-                className="mobile-nav-link"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Program Overview
-              </a>
-              <a
-                href="#enroll"
-                className="mobile-nav-link"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Choose Your Option
-              </a>
-              <a
-                href="#components"
-                className="mobile-nav-link"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                English Components
-              </a>
-              <a
-                href={buildWhatsAppLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp"
-                style={{ marginTop: "0.5rem" }}
-              >
-                <WhatsAppIcon size={18} />
-                <span>Get My Offer on WhatsApp</span>
-              </a>
-            </nav>
-          </div>
-        </div>
-      )}
-
       {/* Hero Section */}
       <section className="hero-section" id="program">
-        {/* Left Column */}
+        {/* Left Column: Headline, Description, CTAs, Social Proof */}
         <div className="hero-left">
           <h1 className="hero-title">
             DON&apos;T JUST<br />
@@ -189,26 +355,13 @@ export default function HomePage() {
           </p>
 
           <div className="cta-group">
-            <a
-              href={buildWhatsAppLink()}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={handleOpenWhatsApp}
               className="btn-whatsapp"
               id="hero-whatsapp-cta"
             >
               <WhatsAppIcon size={20} />
               <span>Get My Offer on WhatsApp</span>
-            </a>
-
-            <button
-              className="btn-ghost-video"
-              onClick={() => setIsVideoModalOpen(true)}
-              id="watch-how-it-works-btn"
-            >
-              <div className="play-icon-wrap">
-                <Play className="w-4 h-4 fill-current" />
-              </div>
-              <span>Watch how it works</span>
             </button>
           </div>
 
@@ -244,43 +397,43 @@ export default function HomePage() {
               />
             </div>
             <div className="social-proof-text">
-              <span className="social-count">+1500 Students</span>
               <span className="social-desc">Join our community</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Instructor & Badges */}
+        {/* Right Column: Instructor Visual, Blue Arch Backdrop, Handwritten Text, Floating Card */}
         <div className="hero-right">
-          {/* Royal Blue Curved Backdrop Shape */}
-          <div className="hero-backdrop-circle">
+          {/* Royal Blue Arch Backdrop */}
+          <div className="hero-backdrop-arch">
             <div className="hero-backdrop-dots"></div>
+
+            {/* Handwritten Script Words on Blue Area */}
+            <div className="hero-handwritten-text">
+              <span className="handwritten-word">Speak.</span>
+              <span className="handwritten-word">Practice.</span>
+              <span className="handwritten-word">Improve.</span>
+              <svg
+                className="handwritten-arrow"
+                width="46"
+                height="28"
+                viewBox="0 0 46 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M40 3C30 3 15 6 6 18M6 18L14 14M6 18L10 24"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           </div>
 
-          {/* Handwritten Style Words on the Blue Area */}
-          <div className="hero-handwritten-text">
-            <span className="handwritten-word">Speak.</span>
-            <span className="handwritten-word">Practice.</span>
-            <span className="handwritten-word">Improve.</span>
-            <svg
-              className="handwritten-arrow"
-              width="45"
-              height="20"
-              viewBox="0 0 45 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 6C14 2 28 3 40 14M40 14L32 12M40 14L38 5"
-                stroke="white"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-
-          {/* Taha Cutout Instructor Image */}
+          {/* Clean Integrated Cutout Image of Taha */}
           <div className="hero-image-wrapper">
             <Image
               src="/images/taha_clean.png"
@@ -297,15 +450,16 @@ export default function HomePage() {
           <div className="floating-reg-card">
             <div className="reg-card-top">
               <div className="reg-card-icon-wrap">
-                <Calendar className="w-5 h-5 text-blue-600" />
+                <Calendar className="w-5 h-5" />
               </div>
-              <div>
-                <span className="reg-card-title">2026 / 2027</span>
-                <p className="reg-card-status">Registration<br />Open!</p>
+              <div className="reg-card-info">
+                <span className="reg-card-season">2026 / 2027</span>
+                <span className="reg-card-status">Registration Open!</span>
               </div>
             </div>
-            <div className="reg-card-badge">
-              <Users className="w-4 h-4 text-blue-600" />
+            <div className="reg-card-divider"></div>
+            <div className="reg-card-bottom">
+              <Users className="w-4 h-4 text-slate-500" />
               <span>Limited Seats</span>
             </div>
           </div>
@@ -375,7 +529,7 @@ export default function HomePage() {
                 className={`tab-btn ${selectedOption === "just-me" ? "active" : ""}`}
                 onClick={() => setSelectedOption("just-me")}
               >
-                <Users className="w-4 h-4" />
+                <User className="w-4 h-4" />
                 <span>Just Me</span>
               </button>
               <button
@@ -389,11 +543,15 @@ export default function HomePage() {
 
             {/* Plan Details & Form */}
             <div className="plan-detail-card">
-              {/* Left Column: Perks */}
+              {/* Left Column: Offer Info, Price, Perks & Guarantee */}
               <div className="plan-info-col">
                 <div className="plan-header-row">
                   <div className="plan-badge-icon">
-                    <GraduationCap className="w-6 h-6" />
+                    {selectedOption === "just-me" ? (
+                      <GraduationCap className="w-5 h-5" />
+                    ) : (
+                      <Users className="w-5 h-5" />
+                    )}
                   </div>
                   <div className="plan-title-wrap">
                     <h3 className="plan-name">
@@ -401,6 +559,17 @@ export default function HomePage() {
                     </h3>
                     <span className="plan-subname">English with Taha Program</span>
                   </div>
+                </div>
+
+                {/* Professional Price Box */}
+                <div className="pricing-block">
+                  <div className="pricing-amount-row">
+                    <span className="pricing-amount">XX MAD</span>
+                    <span className="pricing-badge">
+                      {selectedOption === "just-me" ? "Individuel" : "Offre Duo"}
+                    </span>
+                  </div>
+                  <span className="pricing-duration">Paiement unique • Programme complet</span>
                 </div>
 
                 <ul className="perks-list">
@@ -435,48 +604,166 @@ export default function HomePage() {
                     <span>Support &amp; guidance</span>
                   </li>
                 </ul>
+
+                <div className="plan-perk-highlight">
+                  <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
+                  <span>Session 2026 / 2027 • Places limitées</span>
+                </div>
               </div>
 
-              {/* Right Column: Pricing & Name Inputs */}
+              {/* Right Column: High-End Registration Form */}
               <div className="plan-form-col">
-                <div className="pricing-block">
-                  <span className="pricing-amount">XX MAD</span>
-                  <span className="pricing-duration">One-time / Full Program</span>
+                {selectedOption === "just-me" ? (
+                  <div className="form-inputs-group">
+                    <div className="form-col-title">Vos informations</div>
+                    <div className="input-row-2col">
+                      <div className="input-field-wrap">
+                        <label className="input-label">Prénom (First name)</label>
+                        <input
+                          type="text"
+                          className="text-input"
+                          value={firstName}
+                          onChange={(e) => {
+                            setFirstName(e.target.value);
+                            setModalFirstName(e.target.value);
+                          }}
+                          placeholder="Ex: Yassine"
+                        />
+                      </div>
+                      <div className="input-field-wrap">
+                        <label className="input-label">Nom (Last name)</label>
+                        <input
+                          type="text"
+                          className="text-input"
+                          value={lastName}
+                          onChange={(e) => {
+                            setLastName(e.target.value);
+                            setModalLastName(e.target.value);
+                          }}
+                          placeholder="Ex: Alami"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="form-inputs-group duo-inputs-wrapper">
+                    {/* Student 1 */}
+                    <div className="form-group-block">
+                      <div className="form-step-header">
+                        <span className="form-step-badge">1</span>
+                        <span className="form-step-title">Vos coordonnées (Étudiant 1)</span>
+                      </div>
+                      <div className="input-row-2col">
+                        <div className="input-field-wrap">
+                          <label className="input-label">Votre Prénom</label>
+                          <input
+                            type="text"
+                            className="text-input"
+                            value={firstName}
+                            onChange={(e) => {
+                              setFirstName(e.target.value);
+                              setModalFirstName(e.target.value);
+                            }}
+                            placeholder="Ex: Yassine"
+                          />
+                        </div>
+                        <div className="input-field-wrap">
+                          <label className="input-label">Votre Nom</label>
+                          <input
+                            type="text"
+                            className="text-input"
+                            value={lastName}
+                            onChange={(e) => {
+                              setLastName(e.target.value);
+                              setModalLastName(e.target.value);
+                            }}
+                            placeholder="Ex: Alami"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Student 2 (Friend) */}
+                    <div className="form-group-block">
+                      <div className="form-step-header">
+                        <span className="form-step-badge">2</span>
+                        <span className="form-step-title">Coordonnées de votre ami(e) (Étudiant 2)</span>
+                      </div>
+                      <div className="input-row-2col">
+                        <div className="input-field-wrap">
+                          <label className="input-label">Prénom de l&apos;ami(e)</label>
+                          <input
+                            type="text"
+                            className="text-input"
+                            value={friendFirstName}
+                            onChange={(e) => {
+                              setFriendFirstName(e.target.value);
+                              setModalFriendFirstName(e.target.value);
+                            }}
+                            placeholder="Ex: Mehdi"
+                          />
+                        </div>
+                        <div className="input-field-wrap">
+                          <label className="input-label">Nom de l&apos;ami(e)</label>
+                          <input
+                            type="text"
+                            className="text-input"
+                            value={friendLastName}
+                            onChange={(e) => {
+                              setFriendLastName(e.target.value);
+                              setModalFriendLastName(e.target.value);
+                            }}
+                            placeholder="Ex: Bennani"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="input-field-wrap" style={{ marginTop: "0.5rem" }}>
+                        <label className="input-label">Numéro de téléphone de l&apos;ami(e) (WhatsApp)</label>
+                        <input
+                          type="tel"
+                          className="text-input"
+                          value={friendPhone}
+                          onChange={(e) => {
+                            setFriendPhone(e.target.value);
+                            setModalFriendPhone(e.target.value);
+                          }}
+                          placeholder="Ex: 06 12 34 56 78"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="input-field-wrap" style={{ marginTop: "0.45rem" }}>
+                  <label className="input-label">Message ou question (optionnel)</label>
+                  <input
+                    type="text"
+                    className="text-input"
+                    value={customMessage}
+                    onChange={(e) => {
+                      setCustomMessage(e.target.value);
+                      setModalCustomMsg(e.target.value);
+                    }}
+                    placeholder="Ex: Vos disponibilités pour ce mois ?"
+                  />
                 </div>
 
-                <div className="form-inputs-group">
-                  <div className="input-field-wrap">
-                    <label className="input-label">First name</label>
-                    <input
-                      type="text"
-                      className="text-input"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      placeholder="Othman"
-                    />
-                  </div>
-                  <div className="input-field-wrap">
-                    <label className="input-label">Last name</label>
-                    <input
-                      type="text"
-                      className="text-input"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Essaadi"
-                    />
-                  </div>
-                </div>
-
-                <a
-                  href={buildWhatsAppLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                {/* WhatsApp Action Button */}
+                <button
+                  onClick={handleOpenWhatsApp}
                   className="btn-whatsapp btn-form-whatsapp"
                   id="form-whatsapp-cta"
+                  style={{ marginTop: "0.65rem" }}
                 >
-                  <WhatsAppIcon size={18} />
+                  <WhatsAppIcon size={19} />
                   <span>Get My Offer on WhatsApp</span>
-                </a>
+                </button>
+
+                <p className="form-guarantee-note">
+                  <Lock className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Réponse directe par Taha sur WhatsApp • Sans engagement</span>
+                </p>
               </div>
             </div>
 
@@ -501,43 +788,37 @@ export default function HomePage() {
           <h2 className="components-title">ENGLISH COMPONENTS</h2>
         </div>
 
-        <div className="carousel-container">
-          <button
-            className="carousel-nav-btn"
-            onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
-            aria-label="Previous component"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-
-          <div className="carousel-cards-track">
-            {componentsList.map((item) => (
-              <div key={item.id} className="component-card">
-                <div className={`component-icon-badge ${item.badgeClass}`}>
-                  {item.iconType ? item.iconType : item.icon}
-                </div>
-                <h3 className="component-title">{item.title}</h3>
-                <p className="component-desc">{item.desc}</p>
+        <div
+          ref={carouselRef}
+          onScroll={handleCarouselScroll}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          className="components-grid"
+        >
+          {componentsList.map((item, idx) => (
+            <div
+              key={item.id}
+              className={`component-card ${activeComponentIndex === idx ? "is-active-slide" : ""}`}
+            >
+              <div className={`component-icon-badge ${item.badgeClass}`}>
+                {item.iconType ? item.iconType : item.icon}
               </div>
-            ))}
-          </div>
-
-          <button
-            className="carousel-nav-btn"
-            onClick={() => setCurrentSlide(Math.min(componentsList.length - 1, currentSlide + 1))}
-            aria-label="Next component"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
+              <h3 className="component-title">{item.title}</h3>
+              <p className="component-desc">{item.desc}</p>
+            </div>
+          ))}
         </div>
 
-        <div className="carousel-dots">
-          {componentsList.map((_, idx) => (
+        {/* Carousel Pagination Dots (Mobile Only - No Arrows) */}
+        <div className="carousel-dots-row" aria-label="Carousel pagination">
+          {componentsList.map((item, idx) => (
             <button
-              key={idx}
-              className={`carousel-dot ${idx === currentSlide ? "active" : ""}`}
-              onClick={() => setCurrentSlide(idx)}
-              aria-label={`Go to slide ${idx + 1}`}
+              key={`dot-${item.id}`}
+              type="button"
+              className={`carousel-dot ${activeComponentIndex === idx ? "active" : ""}`}
+              onClick={() => scrollToSlide(idx)}
+              aria-label={`Slide ${idx + 1}: ${item.title}`}
             />
           ))}
         </div>
@@ -554,16 +835,14 @@ export default function HomePage() {
         </div>
 
         <div className="bottom-banner-right">
-          <a
-            href={buildWhatsAppLink()}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={handleOpenWhatsApp}
             className="btn-whatsapp"
             id="bottom-whatsapp-cta"
           >
             <WhatsAppIcon size={20} />
             <span>Get My Offer on WhatsApp</span>
-          </a>
+          </button>
 
           <div className="banner-social-proof">
             <div className="avatar-stack">
@@ -597,7 +876,7 @@ export default function HomePage() {
               />
             </div>
             <p className="banner-social-text">
-              Join <strong>1500+</strong> students already improving
+              Join our community
             </p>
           </div>
         </div>
@@ -633,17 +912,213 @@ export default function HomePage() {
               </div>
 
               <div style={{ display: "flex", justifyContent: "center", marginTop: "1.25rem" }}>
-                <a
-                  href={buildWhatsAppLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button
+                  onClick={() => {
+                    setIsVideoModalOpen(false);
+                    handleOpenWhatsApp();
+                  }}
                   className="btn-whatsapp"
                 >
                   <WhatsAppIcon size={18} />
                   <span>Start on WhatsApp Now</span>
-                </a>
+                </button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* WhatsApp Lead Capture & Message Automation Modal */}
+      {isWhatsAppModalOpen && (
+        <div className="modal-overlay" onClick={() => setIsWhatsAppModalOpen(false)}>
+          <div
+            className="modal-content whatsapp-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="modal-header">
+              <div className="whatsapp-modal-title-group">
+                <div className="whatsapp-modal-icon-badge">
+                  <WhatsAppIcon size={22} />
+                </div>
+                <div>
+                  <h3 className="modal-title">Recevoir mon offre sur WhatsApp</h3>
+                  <p className="whatsapp-modal-subtitle">
+                    Entrez votre nom pour que le message soit automatiquement personnalisé
+                  </p>
+                </div>
+              </div>
+              <button
+                className="modal-close-btn"
+                onClick={() => setIsWhatsAppModalOpen(false)}
+                aria-label="Fermer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleConfirmWhatsAppModal} className="whatsapp-modal-form">
+              {selectedOption === "just-me" ? (
+                <div className="whatsapp-inputs-grid">
+                  <div className="input-field-wrap">
+                    <label className="input-label">Prénom (First name) *</label>
+                    <input
+                      type="text"
+                      required
+                      autoFocus
+                      className="text-input"
+                      value={modalFirstName}
+                      onChange={(e) => setModalFirstName(e.target.value)}
+                      placeholder="Ex: Yassine"
+                    />
+                  </div>
+                  <div className="input-field-wrap">
+                    <label className="input-label">Nom (Last name) *</label>
+                    <input
+                      type="text"
+                      required
+                      className="text-input"
+                      value={modalLastName}
+                      onChange={(e) => setModalLastName(e.target.value)}
+                      placeholder="Ex: Alami"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="whatsapp-duo-fields">
+                  <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
+                  <div className="whatsapp-inputs-grid">
+                    <div className="input-field-wrap">
+                      <label className="input-label">Votre Prénom *</label>
+                      <input
+                        type="text"
+                        required
+                        autoFocus
+                        className="text-input"
+                        value={modalFirstName}
+                        onChange={(e) => setModalFirstName(e.target.value)}
+                        placeholder="Ex: Yassine"
+                      />
+                    </div>
+                    <div className="input-field-wrap">
+                      <label className="input-label">Votre Nom *</label>
+                      <input
+                        type="text"
+                        required
+                        className="text-input"
+                        value={modalLastName}
+                        onChange={(e) => setModalLastName(e.target.value)}
+                        placeholder="Ex: Alami"
+                      />
+                    </div>
+                  </div>
+
+                  <span className="form-section-subtitle" style={{ marginTop: "0.55rem" }}>
+                    👥 Coordonnées de votre ami(e) (Étudiant 2)
+                  </span>
+                  <div className="whatsapp-inputs-grid">
+                    <div className="input-field-wrap">
+                      <label className="input-label">Prénom de l&apos;ami(e) *</label>
+                      <input
+                        type="text"
+                        required
+                        className="text-input"
+                        value={modalFriendFirstName}
+                        onChange={(e) => setModalFriendFirstName(e.target.value)}
+                        placeholder="Ex: Mehdi"
+                      />
+                    </div>
+                    <div className="input-field-wrap">
+                      <label className="input-label">Nom de l&apos;ami(e) *</label>
+                      <input
+                        type="text"
+                        required
+                        className="text-input"
+                        value={modalFriendLastName}
+                        onChange={(e) => setModalFriendLastName(e.target.value)}
+                        placeholder="Ex: Bennani"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="input-field-wrap" style={{ marginTop: "0.45rem" }}>
+                    <label className="input-label">Numéro de téléphone de l&apos;ami(e) *</label>
+                    <input
+                      type="tel"
+                      required
+                      className="text-input"
+                      value={modalFriendPhone}
+                      onChange={(e) => setModalFriendPhone(e.target.value)}
+                      placeholder="Ex: 06 12 34 56 78"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className="input-field-wrap" style={{ marginTop: "0.55rem" }}>
+                <label className="input-label">Message ou question pour Taha (optionnel)</label>
+                <textarea
+                  rows={2}
+                  className="text-input text-textarea"
+                  value={modalCustomMsg}
+                  onChange={(e) => setModalCustomMsg(e.target.value)}
+                  placeholder="Ex: Je suis disponible les soirs de semaine..."
+                />
+              </div>
+
+              {/* Message Live Preview */}
+              <div className="whatsapp-preview-card">
+                <div className="whatsapp-preview-header">
+                  <span className="whatsapp-preview-tag">Message envoyé à Taha sur WhatsApp</span>
+                </div>
+                <div className="whatsapp-preview-bubble">
+                  {selectedOption === "friend" ? (
+                    <p>
+                      Bonjour Taha ! 👋<br />
+                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Me + A Friend) !<br /><br />
+                      👤 <strong>Étudiant 1 :</strong> {modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}<br />
+                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFirstName.trim() || modalFriendLastName.trim() ? `${modalFriendFirstName.trim()} ${modalFriendLastName.trim()}`.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
+                      📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
+                      🎯 <strong>Notre objectif :</strong> {selectedGoal}<br />
+                      {modalCustomMsg.trim() && (
+                        <>
+                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
+                        </>
+                      )}
+                      <br />
+                      Pourriez-vous nous transmettre les détails de l&apos;offre Duo et les disponibilités ? Merci !
+                    </p>
+                  ) : (
+                    <p>
+                      Bonjour Taha ! 👋<br />
+                      Je m&apos;appelle <strong>{modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
+                      Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
+                      🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
+                      👥 <strong>Formule :</strong> Offre Individuelle (Just Me)<br />
+                      {modalCustomMsg.trim() && (
+                        <>
+                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
+                        </>
+                      )}
+                      <br />
+                      Pourriez-vous me transmettre les détails de l&apos;offre et les disponibilités ? Merci !
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="btn-whatsapp whatsapp-submit-btn"
+                disabled={
+                  selectedOption === "friend"
+                    ? !modalFirstName.trim() && !modalFriendFirstName.trim()
+                    : !modalFirstName.trim() && !modalLastName.trim()
+                }
+              >
+                <WhatsAppIcon size={20} />
+                <span>Envoyer sur WhatsApp</span>
+              </button>
+            </form>
           </div>
         </div>
       )}
