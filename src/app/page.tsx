@@ -606,17 +606,15 @@ export default function HomePage() {
                 {selectedOption === "just-me" ? (
                   <div className="form-inputs-group">
                     <div className="form-col-title">Vos informations</div>
-                    <div className="input-row-2col">
-                      <div className="input-field-wrap">
-                        <label className="input-label">Prénom &amp; Nom</label>
-                        <input
-                          type="text"
-                          className="text-input"
-                          value={fullName}
-                          onChange={(e) => setFullName(e.target.value)}
-                          placeholder="Ex: Yassine Alami"
-                        />
-                      </div>
+                    <div className="input-field-wrap">
+                      <label className="input-label">Prénom &amp; Nom</label>
+                      <input
+                        type="text"
+                        className="text-input"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        placeholder="Ex: Yassine Alami"
+                      />
                     </div>
                   </div>
                 ) : (
@@ -627,17 +625,15 @@ export default function HomePage() {
                         <span className="form-step-badge">1</span>
                         <span className="form-step-title">Vos coordonnées (Étudiant 1)</span>
                       </div>
-                      <div className="input-row-2col">
-                        <div className="input-field-wrap">
-                          <label className="input-label">Votre Prénom &amp; Nom</label>
-                          <input
-                            type="text"
-                            className="text-input"
-                            value={fullName}
-                            onChange={(e) => setFullName(e.target.value)}
-                            placeholder="Ex: Yassine Alami"
-                          />
-                        </div>
+                      <div className="input-field-wrap">
+                        <label className="input-label">Votre Prénom &amp; Nom</label>
+                        <input
+                          type="text"
+                          className="text-input"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="Ex: Yassine Alami"
+                        />
                       </div>
                     </div>
 
@@ -647,17 +643,15 @@ export default function HomePage() {
                         <span className="form-step-badge">2</span>
                         <span className="form-step-title">Coordonnées de votre ami(e) (Étudiant 2)</span>
                       </div>
-                      <div className="input-row-2col">
-                        <div className="input-field-wrap">
-                          <label className="input-label">Prénom &amp; Nom de l&apos;ami(e)</label>
-                          <input
-                            type="text"
-                            className="text-input"
-                            value={friendFullName}
-                            onChange={(e) => setFriendFullName(e.target.value)}
-                            placeholder="Ex: Mehdi Bennani"
-                          />
-                        </div>
+                      <div className="input-field-wrap">
+                        <label className="input-label">Prénom &amp; Nom de l&apos;ami(e)</label>
+                        <input
+                          type="text"
+                          className="text-input"
+                          value={friendFullName}
+                          onChange={(e) => setFriendFullName(e.target.value)}
+                          placeholder="Ex: Mehdi Bennani"
+                        />
                       </div>
 
                       <div className="input-field-wrap" style={{ marginTop: "0.5rem" }}>
@@ -890,9 +884,23 @@ export default function HomePage() {
 
             <form onSubmit={handleConfirmWhatsAppModal} className="whatsapp-modal-form">
               {selectedOption === "just-me" ? (
-                <div className="whatsapp-inputs-grid">
+                <div className="input-field-wrap">
+                  <label className="input-label">Prénom &amp; Nom *</label>
+                  <input
+                    type="text"
+                    required
+                    autoFocus
+                    className="text-input"
+                    value={modalFullName}
+                    onChange={(e) => setModalFullName(e.target.value)}
+                    placeholder="Ex: Yassine Alami"
+                  />
+                </div>
+              ) : (
+                <div className="whatsapp-duo-fields">
+                  <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
                   <div className="input-field-wrap">
-                    <label className="input-label">Prénom &amp; Nom *</label>
+                    <label className="input-label">Votre Prénom &amp; Nom *</label>
                     <input
                       type="text"
                       required
@@ -903,40 +911,20 @@ export default function HomePage() {
                       placeholder="Ex: Yassine Alami"
                     />
                   </div>
-                </div>
-              ) : (
-                <div className="whatsapp-duo-fields">
-                  <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
-                  <div className="whatsapp-inputs-grid">
-                    <div className="input-field-wrap">
-                      <label className="input-label">Votre Prénom &amp; Nom *</label>
-                      <input
-                        type="text"
-                        required
-                        autoFocus
-                        className="text-input"
-                        value={modalFullName}
-                        onChange={(e) => setModalFullName(e.target.value)}
-                        placeholder="Ex: Yassine Alami"
-                      />
-                    </div>
-                  </div>
 
                   <span className="form-section-subtitle" style={{ marginTop: "0.55rem" }}>
                     👥 Coordonnées de votre ami(e) (Étudiant 2)
                   </span>
-                  <div className="whatsapp-inputs-grid">
-                    <div className="input-field-wrap">
-                      <label className="input-label">Prénom &amp; Nom de l&apos;ami(e) *</label>
-                      <input
-                        type="text"
-                        required
-                        className="text-input"
-                        value={modalFriendFullName}
-                        onChange={(e) => setModalFriendFullName(e.target.value)}
-                        placeholder="Ex: Mehdi Bennani"
-                      />
-                    </div>
+                  <div className="input-field-wrap">
+                    <label className="input-label">Prénom &amp; Nom de l&apos;ami(e) *</label>
+                    <input
+                      type="text"
+                      required
+                      className="text-input"
+                      value={modalFriendFullName}
+                      onChange={(e) => setModalFriendFullName(e.target.value)}
+                      placeholder="Ex: Mehdi Bennani"
+                    />
                   </div>
 
                   <div className="input-field-wrap" style={{ marginTop: "0.45rem" }}>
