@@ -81,7 +81,7 @@ export default function HomePage() {
       lines = [
         `Bonjour Taha ! 👋`,
         ``,
-        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Me + A Friend) !`,
+        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Ana O Sahbi) !`,
         ``,
         `👤 *Étudiant 1 :* ${student1}`,
         `👥 *Étudiant 2 (Ami/e) :* ${student2}`,
@@ -97,7 +97,7 @@ export default function HomePage() {
         `Je souhaite rejoindre votre programme *English with Taha*.`,
         ``,
         `🎯 *Mon objectif :* ${selectedGoal}`,
-        `👥 *Formule :* Offre Individuelle (Just Me)`,
+        `👥 *Formule :* Offre Individuelle (Ghir ana)`,
       ];
     }
 
@@ -357,13 +357,13 @@ export default function HomePage() {
         <div className="hero-left">
           <h1 className="hero-title">
             Ma tbqach ghir<br />
-            kat3ellem l’anglais.<br />
+            kat3ellem l&apos;ENGLISH.<br />
             <span className="hero-title-highlight">bda kathder biha.</span>
           </h1>
 
           <p className="hero-subtitle">
-            A practical program with Taha to help you speak confidently, communicate
-            naturally and actually use your English.
+            Programme 3amali m3a Taha bach n3awnouk thder bte9a, t3abber mzyan, w
+            testa3mel l’english dyalek bssa7.
           </p>
 
           <div className="cta-group">
@@ -373,7 +373,7 @@ export default function HomePage() {
               id="hero-whatsapp-cta"
             >
               <WhatsAppIcon size={20} />
-              <span>Get My Offer on WhatsApp</span>
+              <span>khod l&apos;Offer mn WhatsApp</span>
             </button>
           </div>
 
@@ -542,14 +542,14 @@ export default function HomePage() {
                 onClick={() => setSelectedOption("just-me")}
               >
                 <User className="w-4 h-4" />
-                <span>Just Me</span>
+                <span>Ghir ana</span>
               </button>
               <button
                 className={`tab-btn ${selectedOption === "friend" ? "active" : ""}`}
                 onClick={() => setSelectedOption("friend")}
               >
                 <Users className="w-4 h-4" />
-                <span>Me + A Friend</span>
+                <span>Ana O Sahbi</span>
               </button>
             </div>
 
@@ -567,7 +567,7 @@ export default function HomePage() {
                   </div>
                   <div className="plan-title-wrap">
                     <h3 className="plan-name">
-                      {selectedOption === "just-me" ? "JUST ME" : "ME + A FRIEND"}
+                      {selectedOption === "just-me" ? "Ghir ana" : "Ana O Sahbi"}
                     </h3>
                     <span className="plan-subname">English with Taha Program</span>
                   </div>
@@ -576,7 +576,9 @@ export default function HomePage() {
                 {/* Professional Price Box */}
                 <div className="pricing-block">
                   <div className="pricing-amount-row">
-                    <span className="pricing-amount">XX MAD</span>
+                    <span className="pricing-amount">
+                      {selectedOption === "just-me" ? "200 DH" : "300 DH"}
+                    </span>
                     <span className="pricing-badge">
                       {selectedOption === "just-me" ? "Individuel" : "Offre Duo"}
                     </span>
@@ -769,7 +771,7 @@ export default function HomePage() {
                   style={{ marginTop: "0.65rem" }}
                 >
                   <WhatsAppIcon size={19} />
-                  <span>Get My Offer on WhatsApp</span>
+                  <span>khod l&apos;Offer mn WhatsApp</span>
                 </button>
 
                 <p className="form-guarantee-note">
@@ -853,7 +855,7 @@ export default function HomePage() {
             id="bottom-whatsapp-cta"
           >
             <WhatsAppIcon size={20} />
-            <span>Get My Offer on WhatsApp</span>
+            <span>khod l&apos;Offer mn WhatsApp</span>
           </button>
 
           <div className="banner-social-proof">
@@ -1086,7 +1088,7 @@ export default function HomePage() {
                   {selectedOption === "friend" ? (
                     <p>
                       Bonjour Taha ! 👋<br />
-                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Me + A Friend) !<br /><br />
+                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Ana O Sahbi) !<br /><br />
                       👤 <strong>Étudiant 1 :</strong> {modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}<br />
                       👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFirstName.trim() || modalFriendLastName.trim() ? `${modalFriendFirstName.trim()} ${modalFriendLastName.trim()}`.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
                       📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
@@ -1105,7 +1107,7 @@ export default function HomePage() {
                       Je m&apos;appelle <strong>{modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
                       Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
                       🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
-                      👥 <strong>Formule :</strong> Offre Individuelle (Just Me)<br />
+                      👥 <strong>Formule :</strong> Offre Individuelle (Ghir ana)<br />
                       {modalCustomMsg.trim() && (
                         <>
                           💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />

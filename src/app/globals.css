@@ -925,7 +925,7 @@ body {
 .plan-info-col {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.1rem;
 }
 
 .plan-header-row {
@@ -968,36 +968,57 @@ body {
 
 /* Pricing Block in Left Column */
 .pricing-block {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 0.85rem 1rem;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 14px;
+  padding: 1rem 1.05rem 0.9rem 1.15rem;
+  box-shadow: 0 8px 20px -14px rgba(29, 78, 216, 0.55);
+}
+
+.pricing-block::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, #2563eb, #0ea5e9);
 }
 
 .pricing-amount-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.75rem;
 }
 
 .pricing-amount {
-  font-size: 1.5rem;
+  font-size: 1.65rem;
   font-weight: 800;
   color: var(--dark-blue);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .pricing-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   font-size: 0.725rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  padding: 0.2rem 0.65rem;
+  line-height: 1.15;
+  white-space: nowrap;
+  padding: 0.35rem 0.7rem;
   border-radius: 20px;
-  background: #eff6ff;
+  background: #ffffff;
   color: #1d4ed8;
   border: 1px solid #bfdbfe;
 }
@@ -1006,6 +1027,7 @@ body {
   font-size: 0.75rem;
   color: var(--text-muted);
   font-weight: 500;
+  line-height: 1.4;
 }
 
 .perks-list {
@@ -1023,6 +1045,7 @@ body {
   font-size: 0.85rem;
   color: var(--text-dark);
   font-weight: 500;
+  line-height: 1.35;
 }
 
 .perk-check {
@@ -1035,6 +1058,7 @@ body {
   background-color: #eff6ff;
   color: var(--primary-blue);
   flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(191, 219, 254, 0.45);
 }
 
 .plan-perk-highlight {
@@ -1046,8 +1070,10 @@ body {
   color: #854d0e;
   background: #fefce8;
   border: 1px solid #fef08a;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  line-height: 1.3;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  box-shadow: 0 5px 14px -10px rgba(133, 77, 14, 0.5);
 }
 
 /* Form Column */
