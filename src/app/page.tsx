@@ -373,14 +373,6 @@ export default function HomePage() {
               <WhatsAppIcon size={20} />
               <span>khod l&apos;Offer mn WhatsApp</span>
             </button>
-            <button
-              onClick={() => setIsVideoModalOpen(true)}
-              className="btn-watch"
-              id="hero-watch-btn"
-            >
-              <Play className="w-4 h-4" />
-              <span>Watch how it works</span>
-            </button>
           </div>
 
           <div className="social-proof">
