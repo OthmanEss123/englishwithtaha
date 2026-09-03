@@ -161,35 +161,35 @@ export default function HomePage() {
       iconType: "A",
       badgeClass: "badge-blue",
       title: "Vocabulary",
-      desc: "Expand your vocabulary and use words confidently.",
+      desc: "L'vocab li at7taj f'kula Unit",
     },
     {
       id: "writing",
       icon: <PenTool className="w-5 h-5" />,
       badgeClass: "badge-amber",
       title: "Writing",
-      desc: "Write clear, well-structured texts for any purpose.",
+      desc: "l'wa7ch li maghayb9ach ykhel3ek",
     },
     {
       id: "functions",
       icon: <MessageCircle className="w-5 h-5" />,
       badgeClass: "badge-purple",
       title: "Functions",
-      desc: "Learn useful expressions for real-life situations.",
+      desc: "at3erf imta w kifach tste3mel kula w7da",
     },
     {
       id: "grammar",
       iconType: "G",
       badgeClass: "badge-pink",
       title: "Grammar",
-      desc: "Master grammar rules and use them accurately.",
+      desc: "l'9awa3id mchro7in b tare9a li at5erej biha",
     },
     {
       id: "comprehension",
       icon: <FileSearch className="w-5 h-5" />,
       badgeClass: "badge-teal",
       title: "Reading Comprehension",
-      desc: "Understand texts better and answer with confidence.",
+      desc: "15 pts mdmouna fhad section",
     },
   ];
 
@@ -621,10 +621,7 @@ export default function HomePage() {
                   <div className="form-inputs-group duo-inputs-wrapper">
                     {/* Student 1 */}
                     <div className="form-group-block">
-                      <div className="form-step-header">
-                        <span className="form-step-badge">1</span>
-                        <span className="form-step-title">Vos coordonnées (Étudiant 1)</span>
-                      </div>
+                     
                       <div className="input-field-wrap">
                         <label className="input-label">Smytk (Full name)</label>
                         <input
@@ -639,10 +636,7 @@ export default function HomePage() {
 
                     {/* Student 2 (Friend) */}
                     <div className="form-group-block">
-                      <div className="form-step-header">
-                        <span className="form-step-badge">2</span>
-                        <span className="form-step-title">Coordonnées de votre ami(e) (Étudiant 2)</span>
-                      </div>
+                     
                       <div className="input-field-wrap">
                         <label className="input-label">Smyt Sahbk (Full name)</label>
                         <input
@@ -711,7 +705,7 @@ export default function HomePage() {
       {/* English Components Section */}
       <section className="components-section" id="components">
         <div className="components-header">
-          <h2 className="components-title">ENGLISH COMPONENTS</h2>
+          <h2 className="components-title">5 SKILLS. 1 GOAL: L'BAC.</h2>
         </div>
 
         <div
@@ -753,10 +747,9 @@ export default function HomePage() {
       {/* Bottom CTA Banner */}
       <section className="bottom-cta-banner">
         <div className="bottom-banner-left">
-          <h2 className="banner-title-1">TSENNITI BEZAF DYAL LWE9T.
-<br />DABA HOWA LWE9T BACH TBDA THDER.</h2>
+          <h2 className="banner-title-1">HADA HOUWA LWE9T BACH TBDA</h2>
           <p className="banner-subtitle">
-            M3a English with Taha, Bda parcours dyalk l&apos;it9an lha9i9i
+            M3a Prof Taha, English bla stress bla guess, towards success
           </p>
         </div>
 
