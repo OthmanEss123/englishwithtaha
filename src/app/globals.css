@@ -1811,7 +1811,7 @@ body {
   .site-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-bottom: 1.25rem;
   }
 
@@ -1820,7 +1820,7 @@ body {
   }
 
   .site-brand-logo {
-    width: 180px;
+    width: clamp(125px, 32vw, 155px);
   }
 
   .site-brand {
@@ -1833,38 +1833,42 @@ body {
   }
 
   .mobile-menu-btn {
-    display: flex !important;
+    display: none !important;
   }
 
   .hero-section {
-    display: grid !important;
-    grid-template-columns: 1.18fr 0.82fr !important;
-    gap: 0.25rem !important;
-    align-items: flex-end !important;
-    margin-bottom: 2rem !important;
     position: relative !important;
-    min-height: 380px !important;
-    padding-bottom: 0.5rem;
+    display: block !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    margin-bottom: 1rem !important;
+    min-height: 0 !important;
+    padding: 0.4rem 0 0 0 !important;
   }
 
   .hero-left {
-    order: 1 !important;
+    position: relative !important;
+    z-index: 5 !important;
+    width: 54% !important;
+    max-width: none !important;
     display: flex !important;
     flex-direction: column !important;
-    gap: 0.65rem !important;
-    padding-bottom: 0.25rem !important;
-    z-index: 10 !important;
+    align-items: flex-start !important;
+    gap: 0.55rem !important;
+    padding: 0.2rem 0 0 0 !important;
   }
 
   .hero-title {
-    font-size: 1.325rem !important;
-    line-height: 1.08 !important;
-    letter-spacing: -0.03em !important;
+    font-size: clamp(1.05rem, 5.4vw, 1.42rem) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -0.02em !important;
+    font-weight: 800 !important;
   }
 
   .hero-subtitle {
-    font-size: 0.72rem !important;
-    line-height: 1.35 !important;
+    font-size: clamp(0.72rem, 3.4vw, 0.86rem) !important;
+    line-height: 1.5 !important;
     color: #475569 !important;
     max-width: 100% !important;
   }
@@ -1873,111 +1877,160 @@ body {
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
-    gap: 0.45rem !important;
-    margin-top: 0.15rem !important;
+    gap: 0.5rem !important;
+    margin-top: 0.35rem !important;
     width: 100% !important;
   }
 
   .btn-whatsapp {
-    font-size: 0.735rem !important;
-    padding: 0.55rem 0.85rem !important;
+    font-size: clamp(0.7rem, 3vw, 0.82rem) !important;
+    padding: 0.5rem 0.85rem !important;
     gap: 0.4rem !important;
+    min-height: 40px !important;
     width: auto !important;
     max-width: 100% !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    border-radius: 999px !important;
   }
 
   .btn-whatsapp svg {
     width: 16px !important;
     height: 16px !important;
+    flex-shrink: 0 !important;
   }
 
-  .btn-ghost-video {
-    font-size: 0.7rem !important;
-    padding: 0.45rem 0.8rem !important;
+  .btn-watch {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     gap: 0.4rem !important;
+    min-height: 40px !important;
+    padding: 0.5rem 0.95rem !important;
+    font-size: clamp(0.68rem, 2.9vw, 0.8rem) !important;
+    font-weight: 700 !important;
+    color: #1d4ed8 !important;
+    background: #ffffff !important;
+    border: 2px solid #1d4ed8 !important;
+    border-radius: 999px !important;
+    white-space: nowrap !important;
     width: auto !important;
-    max-width: 100% !important;
-    justify-content: flex-start !important;
+    cursor: pointer !important;
   }
 
-  .btn-ghost-video .play-icon-wrap {
-    width: 16px !important;
-    height: 16px !important;
-  }
-
-  .btn-ghost-video .play-icon-wrap svg {
-    width: 10px !important;
-    height: 10px !important;
+  .btn-watch svg {
+    width: 15px !important;
+    height: 15px !important;
+    flex-shrink: 0 !important;
   }
 
   .social-proof {
     display: flex !important;
+    flex-wrap: nowrap !important;
     align-items: center !important;
     gap: 0.4rem !important;
-    margin-top: 0.15rem !important;
+    margin-top: 0.45rem !important;
   }
 
   .avatar-item {
-    width: 25px !important;
-    height: 25px !important;
+    width: 26px !important;
+    height: 26px !important;
     border-width: 1.5px !important;
     margin-left: -6px !important;
   }
 
   .social-desc {
-    font-size: 0.6875rem !important;
+    font-size: 0.72rem !important;
     font-weight: 700 !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
   }
 
-  /* Right column: Taha & Arch */
+  /* Right visual: tall blue arch + Taha, attached to right edge, starts upper-middle */
   .hero-right {
-    order: 2 !important;
-    position: relative !important;
-    display: flex !important;
-    justify-content: flex-end !important;
-    align-items: flex-end !important;
-    min-height: 380px !important;
-    margin-right: -8px !important;
-    width: 100% !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 4% !important;
+    bottom: 0 !important;
+    width: 48% !important;
+    min-height: 0 !important;
+    margin-right: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
   }
 
   .hero-backdrop-arch {
     position: absolute !important;
-    bottom: 0 !important;
     right: 0 !important;
-    width: 165px !important;
-    height: 345px !important;
-    border-radius: 82px 82px 18px 18px !important;
-    z-index: 1 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    width: 100% !important;
+    height: 94% !important;
+    border-radius: 430px 430px 0 0 !important;
+    background: linear-gradient(160deg, #1d5ce6 0%, #0d3da8 58%, #06287e 100%) !important;
+    box-shadow: 0 18px 40px -12px rgba(13, 61, 168, 0.32) !important;
     overflow: hidden !important;
-    transform: none !important;
+  }
+
+  .hero-backdrop-dots {
+    opacity: 0.42 !important;
   }
 
   .hero-handwritten-text {
     position: absolute !important;
-    top: 7% !important;
-    right: 6px !important;
-    font-size: 1.05rem !important;
-    line-height: 1.15 !important;
+    top: 17% !important;
+    right: 8% !important;
+    left: auto !important;
+    width: auto !important;
+    max-width: 70% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+    font-size: clamp(0.78rem, 3.4vw, 0.98rem) !important;
+    line-height: 1.18 !important;
     gap: 0.1rem !important;
+    transform: rotate(3deg) !important;
+    z-index: 5 !important;
+    white-space: nowrap !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
   }
 
   .handwritten-arrow {
     width: 20px !important;
     height: 13px !important;
     margin-top: 0.15rem !important;
-    margin-left: 6px !important;
+    margin-left: 12px !important;
+    align-self: flex-end !important;
+    flex-shrink: 0 !important;
   }
 
   .hero-image-wrapper {
-    width: 172px !important;
-    margin-right: 18px !important;
-    position: relative !important;
+    position: absolute !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin-right: 0 !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    align-items: flex-end !important;
     z-index: 2 !important;
   }
 
-  /* Hide floating card on mobile so Taha is unobstructed like mockup */
+  .hero-image {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Registration card hidden on mobile (reference has no card) */
   .floating-reg-card {
     display: none !important;
   }
