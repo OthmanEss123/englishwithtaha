@@ -37,38 +37,30 @@ function WhatsAppIcon({ className = "w-5 h-5", size = 20 }: { className?: string
 export default function HomePage() {
   const [selectedGoal, setSelectedGoal] = useState<string>("Speaking");
   const [selectedOption, setSelectedOption] = useState<"just-me" | "friend">("just-me");
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [friendFirstName, setFriendFirstName] = useState<string>("");
-  const [friendLastName, setFriendLastName] = useState<string>("");
+  const [fullName, setFullName] = useState<string>("");
+  const [friendFullName, setFriendFullName] = useState<string>("");
   const [friendPhone, setFriendPhone] = useState<string>("");
   const [customMessage, setCustomMessage] = useState<string>("");
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState<boolean>(false);
-  const [modalFirstName, setModalFirstName] = useState<string>("");
-  const [modalLastName, setModalLastName] = useState<string>("");
-  const [modalFriendFirstName, setModalFriendFirstName] = useState<string>("");
-  const [modalFriendLastName, setModalFriendLastName] = useState<string>("");
+  const [modalFullName, setModalFullName] = useState<string>("");
+  const [modalFriendFullName, setModalFriendFullName] = useState<string>("");
   const [modalFriendPhone, setModalFriendPhone] = useState<string>("");
   const [modalCustomMsg, setModalCustomMsg] = useState<string>("");
 
   const phoneNumber = "212600211281";
 
   const buildWhatsAppLink = (
-    overrideFirst?: string,
-    overrideLast?: string,
-    overrideFriendFirst?: string,
-    overrideFriendLast?: string,
+    overrideName?: string,
+    overrideFriendName?: string,
     overrideFriendPhone?: string,
     overrideMsg?: string
   ) => {
-    const f = (overrideFirst !== undefined ? overrideFirst : firstName).trim();
-    const l = (overrideLast !== undefined ? overrideLast : lastName).trim();
-    const student1 = f || l ? `${f} ${l}`.trim() : "Étudiant 1";
+    const f = (overrideName !== undefined ? overrideName : fullName).trim();
+    const student1 = f ? f : "Étudiant 1";
 
-    const ff = (overrideFriendFirst !== undefined ? overrideFriendFirst : friendFirstName).trim();
-    const fl = (overrideFriendLast !== undefined ? overrideFriendLast : friendLastName).trim();
-    const student2 = ff || fl ? `${ff} ${fl}`.trim() : "Ami(e) / Étudiant 2";
+    const ff = (overrideFriendName !== undefined ? overrideFriendName : friendFullName).trim();
+    const student2 = ff ? ff : "Ami(e) / Étudiant 2";
     const fPhone = (overrideFriendPhone !== undefined ? overrideFriendPhone : friendPhone).trim();
 
     const note = (overrideMsg !== undefined ? overrideMsg : customMessage).trim();
@@ -79,7 +71,7 @@ export default function HomePage() {
       lines = [
         `Bonjour Taha ! 👋`,
         ``,
-        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Ana O Sahbi) !`,
+        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Bac Duo) !`,
         ``,
         `👤 *Étudiant 1 :* ${student1}`,
         `👥 *Étudiant 2 (Ami/e) :* ${student2}`,
@@ -117,25 +109,21 @@ export default function HomePage() {
   const handleOpenWhatsApp = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     if (selectedOption === "just-me") {
-      if (firstName.trim() && lastName.trim()) {
-        window.open(buildWhatsAppLink(firstName, lastName, friendFirstName, friendLastName, friendPhone, customMessage), "_blank");
+      if (fullName.trim()) {
+        window.open(buildWhatsAppLink(fullName, friendFullName, friendPhone, customMessage), "_blank");
       } else {
-        setModalFirstName(firstName);
-        setModalLastName(lastName);
-        setModalFriendFirstName(friendFirstName);
-        setModalFriendLastName(friendLastName);
+        setModalFullName(fullName);
+        setModalFriendFullName(friendFullName);
         setModalFriendPhone(friendPhone);
         setModalCustomMsg(customMessage);
         setIsWhatsAppModalOpen(true);
       }
     } else {
-      if (firstName.trim() && lastName.trim() && friendFirstName.trim() && friendLastName.trim()) {
-        window.open(buildWhatsAppLink(firstName, lastName, friendFirstName, friendLastName, friendPhone, customMessage), "_blank");
+      if (fullName.trim() && friendFullName.trim()) {
+        window.open(buildWhatsAppLink(fullName, friendFullName, friendPhone, customMessage), "_blank");
       } else {
-        setModalFirstName(firstName);
-        setModalLastName(lastName);
-        setModalFriendFirstName(friendFirstName);
-        setModalFriendLastName(friendLastName);
+        setModalFullName(fullName);
+        setModalFriendFullName(friendFullName);
         setModalFriendPhone(friendPhone);
         setModalCustomMsg(customMessage);
         setIsWhatsAppModalOpen(true);
@@ -145,22 +133,18 @@ export default function HomePage() {
 
   const handleConfirmWhatsAppModal = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!modalFirstName.trim()) return;
-    setFirstName(modalFirstName);
-    if (modalLastName.trim()) setLastName(modalLastName);
+    if (!modalFullName.trim()) return;
+    setFullName(modalFullName);
     if (selectedOption === "friend") {
-      if (modalFriendFirstName.trim()) setFriendFirstName(modalFriendFirstName);
-      if (modalFriendLastName.trim()) setFriendLastName(modalFriendLastName);
+      if (modalFriendFullName.trim()) setFriendFullName(modalFriendFullName);
       if (modalFriendPhone.trim()) setFriendPhone(modalFriendPhone);
     }
     if (modalCustomMsg.trim()) setCustomMessage(modalCustomMsg);
 
     window.open(
       buildWhatsAppLink(
-        modalFirstName,
-        modalLastName,
-        modalFriendFirstName,
-        modalFriendLastName,
+        modalFullName,
+        modalFriendFullName,
         modalFriendPhone,
         modalCustomMsg
       ),
@@ -169,7 +153,7 @@ export default function HomePage() {
     setIsWhatsAppModalOpen(false);
   };
 
-  const goals = ["Speaking", "Career", "Studies", "Travel"];
+  const goals = ["Grammar ", "Vocabulary", "Writing", "Kulchi"];
 
   const componentsList = [
     {
@@ -354,14 +338,13 @@ export default function HomePage() {
         {/* Left Column: Headline, Description, CTAs, Social Proof */}
         <div className="hero-left">
           <h1 className="hero-title">
-            Ma tbqach ghir<br />
-            kat3ellem l&apos;ENGLISH.<br />
-            <span className="hero-title-highlight">bda kathder biha.</span>
+            Bla stress. Bla guess.<br />
+            Wjjed English dyal l&apos;Bac for success.
           </h1>
 
           <p className="hero-subtitle">
-            Programme 3amali m3a Taha bach n3awnouk thder bte9a, t3abber mzyan, w
-            testa3mel l’english dyalek bssa7.
+            Mn lesson l&apos;exercice, mn exercice l&apos;National.<br />
+            Nraja3o, ntderbo, w nwjdo English dyalk!
           </p>
 
           <div className="cta-group">
@@ -371,7 +354,7 @@ export default function HomePage() {
               id="hero-whatsapp-cta"
             >
               <WhatsAppIcon size={20} />
-              <span>khod l&apos;Offer mn WhatsApp</span>
+              <span> 7jez Blastek</span>
             </button>
           </div>
 
@@ -420,9 +403,9 @@ export default function HomePage() {
 
             {/* Handwritten Script Words on Blue Area */}
             <div className="hero-handwritten-text">
-              <span className="handwritten-word">Speak.</span>
-              <span className="handwritten-word">Practice.</span>
-              <span className="handwritten-word">Improve.</span>
+              <span className="handwritten-word">Nail it.</span>
+              <span className="handwritten-word">Write it.</span>
+              <span className="handwritten-word">Win it.</span>
               <svg
                 className="handwritten-arrow"
                 width="46"
@@ -463,14 +446,14 @@ export default function HomePage() {
                 <Calendar className="w-5 h-5" />
               </div>
               <div className="reg-card-info">
-                <span className="reg-card-season">2026 / 2027</span>
+                <span className="reg-card-season">Bac English 2026 / 2027</span>
                 <span className="reg-card-status">Registration Open!</span>
               </div>
             </div>
             <div className="reg-card-divider"></div>
             <div className="reg-card-bottom">
               <Users className="w-4 h-4 text-slate-500" />
-              <span>Limited Seats</span>
+              <span>Places Limitées • 7jez Blastek</span>
             </div>
           </div>
         </div>
@@ -502,8 +485,8 @@ export default function HomePage() {
 
             <div className="chat-body">
               <div className="chat-bubble-received">
-                <p className="chat-bubble-greeting">Hey {firstName || "there"} 👋</p>
-                <p className="chat-bubble-question">chno l&apos;hadaf l&apos;assassi dyalk mn l&apos;english</p>
+                <p className="chat-bubble-greeting">Salam 👋</p>
+                <p className="chat-bubble-question">Chno aktar haja mberztak f English dyal l'Bac?</p>
                 <span className="chat-bubble-time">10:30</span>
               </div>
 
@@ -531,7 +514,7 @@ export default function HomePage() {
 
           {/* Right Card: Choose Your Option */}
           <div className="option-selection-card">
-            <h2 className="option-section-title">KHTAR L&apos;OPTION DYALK</h2>
+            <h2 className="option-section-title">KIFACH BAGHI TWJED L&apos;BAC?</h2>
 
             {/* Tab Switcher */}
             <div className="option-tab-switcher">
@@ -540,14 +523,14 @@ export default function HomePage() {
                 onClick={() => setSelectedOption("just-me")}
               >
                 <User className="w-4 h-4" />
-                <span>Ghir ana</span>
+                <span>Bac Solo</span>
               </button>
               <button
                 className={`tab-btn ${selectedOption === "friend" ? "active" : ""}`}
                 onClick={() => setSelectedOption("friend")}
               >
                 <Users className="w-4 h-4" />
-                <span>Ana O Sahbi</span>
+                <span>Bac Duo</span>
               </button>
             </div>
 
@@ -565,37 +548,26 @@ export default function HomePage() {
                   </div>
                   <div className="plan-title-wrap">
                     <h3 className="plan-name">
-                      {selectedOption === "just-me" ? "Ghir ana" : "Ana O Sahbi"}
+                      {selectedOption === "just-me" ? "Bac Solo" : "Bac Duo"}
                     </h3>
-                    <span className="plan-subname">English with Taha Program</span>
+                    <span className="plan-subname">Bac English with Taha</span>
                   </div>
                 </div>
 
-                {/* Professional Price Box */}
-                <div className="pricing-block">
-                  <div className="pricing-amount-row">
-                    <span className="pricing-amount">
-                      {selectedOption === "just-me" ? "200 DH" : "300 DH"}
-                    </span>
-                    <span className="pricing-badge">
-                      {selectedOption === "just-me" ? "Individuel" : "Offre Duo"}
-                    </span>
-                  </div>
-                  <span className="pricing-duration">Paiement unique • Programme complet</span>
-                </div>
+               
 
                 <ul className="perks-list">
                   <li className="perk-item">
                     <span className="perk-check">
                       <Check className="w-3.5 h-3.5" />
                     </span>
-                    <span>Personalized learning path</span>
+                    <span>Plearn → practise → Bac</span>
                   </li>
                   <li className="perk-item">
                     <span className="perk-check">
                       <Check className="w-3.5 h-3.5" />
                     </span>
-                    <span>Speaking &amp; pronunciation</span>
+                    <span>Grammar, Vocabulary & Functions</span>
                   </li>
                   <li className="perk-item">
                     <span className="perk-check">
@@ -615,11 +587,17 @@ export default function HomePage() {
                     </span>
                     <span>Support &amp; guidance</span>
                   </li>
+                  <li className="perk-item">
+                    <span className="perk-check">
+                      <Check className="w-3.5 h-3.5" />
+                    </span>
+                    <span>Ghanbdaw à 0</span>
+                  </li>
                 </ul>
 
                 <div className="plan-perk-highlight">
                   <Sparkles className="w-4 h-4 text-amber-500 flex-shrink-0" />
-                  <span>Session 2026 / 2027 • Places limitées</span>
+                  <span>Bac 2026 / 2027 • Places limitées</span>
                 </div>
               </div>
 
@@ -630,29 +608,13 @@ export default function HomePage() {
                     <div className="form-col-title">Vos informations</div>
                     <div className="input-row-2col">
                       <div className="input-field-wrap">
-                        <label className="input-label">Prénom (First name)</label>
+                        <label className="input-label">Prénom &amp; Nom</label>
                         <input
                           type="text"
                           className="text-input"
-                          value={firstName}
-                          onChange={(e) => {
-                            setFirstName(e.target.value);
-                            setModalFirstName(e.target.value);
-                          }}
-                          placeholder="Ex: Yassine"
-                        />
-                      </div>
-                      <div className="input-field-wrap">
-                        <label className="input-label">Nom (Last name)</label>
-                        <input
-                          type="text"
-                          className="text-input"
-                          value={lastName}
-                          onChange={(e) => {
-                            setLastName(e.target.value);
-                            setModalLastName(e.target.value);
-                          }}
-                          placeholder="Ex: Alami"
+                          value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          placeholder="Ex: Yassine Alami"
                         />
                       </div>
                     </div>
@@ -667,29 +629,13 @@ export default function HomePage() {
                       </div>
                       <div className="input-row-2col">
                         <div className="input-field-wrap">
-                          <label className="input-label">Votre Prénom</label>
+                          <label className="input-label">Votre Prénom &amp; Nom</label>
                           <input
                             type="text"
                             className="text-input"
-                            value={firstName}
-                            onChange={(e) => {
-                              setFirstName(e.target.value);
-                              setModalFirstName(e.target.value);
-                            }}
-                            placeholder="Ex: Yassine"
-                          />
-                        </div>
-                        <div className="input-field-wrap">
-                          <label className="input-label">Votre Nom</label>
-                          <input
-                            type="text"
-                            className="text-input"
-                            value={lastName}
-                            onChange={(e) => {
-                              setLastName(e.target.value);
-                              setModalLastName(e.target.value);
-                            }}
-                            placeholder="Ex: Alami"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            placeholder="Ex: Yassine Alami"
                           />
                         </div>
                       </div>
@@ -703,29 +649,13 @@ export default function HomePage() {
                       </div>
                       <div className="input-row-2col">
                         <div className="input-field-wrap">
-                          <label className="input-label">Prénom de l&apos;ami(e)</label>
+                          <label className="input-label">Prénom &amp; Nom de l&apos;ami(e)</label>
                           <input
                             type="text"
                             className="text-input"
-                            value={friendFirstName}
-                            onChange={(e) => {
-                              setFriendFirstName(e.target.value);
-                              setModalFriendFirstName(e.target.value);
-                            }}
-                            placeholder="Ex: Mehdi"
-                          />
-                        </div>
-                        <div className="input-field-wrap">
-                          <label className="input-label">Nom de l&apos;ami(e)</label>
-                          <input
-                            type="text"
-                            className="text-input"
-                            value={friendLastName}
-                            onChange={(e) => {
-                              setFriendLastName(e.target.value);
-                              setModalFriendLastName(e.target.value);
-                            }}
-                            placeholder="Ex: Bennani"
+                            value={friendFullName}
+                            onChange={(e) => setFriendFullName(e.target.value)}
+                            placeholder="Ex: Mehdi Bennani"
                           />
                         </div>
                       </div>
@@ -769,7 +699,7 @@ export default function HomePage() {
                   style={{ marginTop: "0.65rem" }}
                 >
                   <WhatsAppIcon size={19} />
-                  <span>khod l&apos;Offer mn WhatsApp</span>
+                  <span> 7jez Blastek</span>
                 </button>
 
                 <p className="form-guarantee-note">
@@ -843,7 +773,7 @@ export default function HomePage() {
             id="bottom-whatsapp-cta"
           >
             <WhatsAppIcon size={20} />
-            <span>khod l&apos;Offer mn WhatsApp</span>
+            <span> 7jez Blastek</span>
           </button>
 
           <div className="banner-social-proof">
@@ -962,26 +892,15 @@ export default function HomePage() {
               {selectedOption === "just-me" ? (
                 <div className="whatsapp-inputs-grid">
                   <div className="input-field-wrap">
-                    <label className="input-label">Prénom (First name) *</label>
+                    <label className="input-label">Prénom &amp; Nom *</label>
                     <input
                       type="text"
                       required
                       autoFocus
                       className="text-input"
-                      value={modalFirstName}
-                      onChange={(e) => setModalFirstName(e.target.value)}
-                      placeholder="Ex: Yassine"
-                    />
-                  </div>
-                  <div className="input-field-wrap">
-                    <label className="input-label">Nom (Last name) *</label>
-                    <input
-                      type="text"
-                      required
-                      className="text-input"
-                      value={modalLastName}
-                      onChange={(e) => setModalLastName(e.target.value)}
-                      placeholder="Ex: Alami"
+                      value={modalFullName}
+                      onChange={(e) => setModalFullName(e.target.value)}
+                      placeholder="Ex: Yassine Alami"
                     />
                   </div>
                 </div>
@@ -990,26 +909,15 @@ export default function HomePage() {
                   <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
                   <div className="whatsapp-inputs-grid">
                     <div className="input-field-wrap">
-                      <label className="input-label">Votre Prénom *</label>
+                      <label className="input-label">Votre Prénom &amp; Nom *</label>
                       <input
                         type="text"
                         required
                         autoFocus
                         className="text-input"
-                        value={modalFirstName}
-                        onChange={(e) => setModalFirstName(e.target.value)}
-                        placeholder="Ex: Yassine"
-                      />
-                    </div>
-                    <div className="input-field-wrap">
-                      <label className="input-label">Votre Nom *</label>
-                      <input
-                        type="text"
-                        required
-                        className="text-input"
-                        value={modalLastName}
-                        onChange={(e) => setModalLastName(e.target.value)}
-                        placeholder="Ex: Alami"
+                        value={modalFullName}
+                        onChange={(e) => setModalFullName(e.target.value)}
+                        placeholder="Ex: Yassine Alami"
                       />
                     </div>
                   </div>
@@ -1019,25 +927,14 @@ export default function HomePage() {
                   </span>
                   <div className="whatsapp-inputs-grid">
                     <div className="input-field-wrap">
-                      <label className="input-label">Prénom de l&apos;ami(e) *</label>
+                      <label className="input-label">Prénom &amp; Nom de l&apos;ami(e) *</label>
                       <input
                         type="text"
                         required
                         className="text-input"
-                        value={modalFriendFirstName}
-                        onChange={(e) => setModalFriendFirstName(e.target.value)}
-                        placeholder="Ex: Mehdi"
-                      />
-                    </div>
-                    <div className="input-field-wrap">
-                      <label className="input-label">Nom de l&apos;ami(e) *</label>
-                      <input
-                        type="text"
-                        required
-                        className="text-input"
-                        value={modalFriendLastName}
-                        onChange={(e) => setModalFriendLastName(e.target.value)}
-                        placeholder="Ex: Bennani"
+                        value={modalFriendFullName}
+                        onChange={(e) => setModalFriendFullName(e.target.value)}
+                        placeholder="Ex: Mehdi Bennani"
                       />
                     </div>
                   </div>
@@ -1077,8 +974,8 @@ export default function HomePage() {
                     <p>
                       Bonjour Taha ! 👋<br />
                       Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Ana O Sahbi) !<br /><br />
-                      👤 <strong>Étudiant 1 :</strong> {modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}<br />
-                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFirstName.trim() || modalFriendLastName.trim() ? `${modalFriendFirstName.trim()} ${modalFriendLastName.trim()}`.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
+                      👤 <strong>Étudiant 1 :</strong> {modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}<br />
+                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
                       📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
                       🎯 <strong>Notre objectif :</strong> {selectedGoal}<br />
                       {modalCustomMsg.trim() && (
@@ -1092,10 +989,10 @@ export default function HomePage() {
                   ) : (
                     <p>
                       Bonjour Taha ! 👋<br />
-                      Je m&apos;appelle <strong>{modalFirstName.trim() || modalLastName.trim() ? `${modalFirstName.trim()} ${modalLastName.trim()}`.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
+                      Je m&apos;appelle <strong>{modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
                       Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
                       🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
-                      👥 <strong>Formule :</strong> Offre Individuelle (Ghir ana)<br />
+                      👥 <strong>Formule :</strong> Offre Individuelle (Bac Solo)<br />
                       {modalCustomMsg.trim() && (
                         <>
                           💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
@@ -1113,8 +1010,8 @@ export default function HomePage() {
                 className="btn-whatsapp whatsapp-submit-btn"
                 disabled={
                   selectedOption === "friend"
-                    ? !modalFirstName.trim() && !modalFriendFirstName.trim()
-                    : !modalFirstName.trim() && !modalLastName.trim()
+                    ? !modalFullName.trim() || !modalFriendFullName.trim()
+                    : !modalFullName.trim()
                 }
               >
                 <WhatsAppIcon size={20} />

@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Bac English | Learn. Practice. Succeed.",
-  description: "Bac English is Programme 3amali m3a Taha bach n3awnouk thder bte9a, t3abber mzyan, w testa3mel l’english dyalek bssa7. 2026/2027 Registration Open!",
+  description: "Bac English is Mn lesson l'exercice, mn exercice l'National. Nraja3o, ntderbo, w nwjdo English dyalk! 2026/2027 Registration Open!",
   keywords: ["Bac English", "English with Taha", "Learn English Morocco", "English speaking practice", "English fluency coaching"],
   authors: [{ name: "Taha" }],
 };
