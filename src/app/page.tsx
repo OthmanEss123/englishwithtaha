@@ -8,8 +8,6 @@ import {
   User,
   Play,
   Check,
-  ShieldCheck,
-  Zap,
   GraduationCap,
   PenTool,
   MessageCircle,
@@ -505,7 +503,7 @@ export default function HomePage() {
             <div className="chat-body">
               <div className="chat-bubble-received">
                 <p className="chat-bubble-greeting">Hey {firstName || "there"} 👋</p>
-                <p className="chat-bubble-question">What&apos;s your main English goal?</p>
+                <p className="chat-bubble-question">chno l&apos;hadaf l&apos;assassi dyalk mn l&apos;english</p>
                 <span className="chat-bubble-time">10:30</span>
               </div>
 
@@ -533,7 +531,7 @@ export default function HomePage() {
 
           {/* Right Card: Choose Your Option */}
           <div className="option-selection-card">
-            <h2 className="option-section-title">CHOOSE YOUR OPTION</h2>
+            <h2 className="option-section-title">KHTAR L&apos;OPTION DYALK</h2>
 
             {/* Tab Switcher */}
             <div className="option-tab-switcher">
@@ -782,16 +780,6 @@ export default function HomePage() {
             </div>
 
             {/* Trust Badges */}
-            <div className="trust-badges-row">
-              <span className="trust-item">
-                <ShieldCheck className="w-4 h-4 trust-icon" />
-                <span>No payment required</span>
-              </span>
-              <span className="trust-item">
-                <Zap className="w-4 h-4 trust-icon" />
-                <span>Takes less than 1 minute</span>
-              </span>
-            </div>
           </div>
         </div>
       </section>
@@ -841,10 +829,10 @@ export default function HomePage() {
       {/* Bottom CTA Banner */}
       <section className="bottom-cta-banner">
         <div className="bottom-banner-left">
-          <h2 className="banner-title-1">YOU&apos;VE WAITED LONG ENOUGH.</h2>
-          <h2 className="banner-title-2">IT&apos;S TIME TO SPEAK.</h2>
+          <h2 className="banner-title-1">TSENNITI BEZAF DYAL LWE9T.
+<br />DABA HOWA LWE9T BACH TBDA THDER.</h2>
           <p className="banner-subtitle">
-            Join English with Taha and start your journey to real fluency.
+            M3a English with Taha, Bda parcours dyalk l&apos;it9an lha9i9i
           </p>
         </div>
 
