@@ -356,9 +356,9 @@ export default function HomePage() {
         {/* Left Column: Headline, Description, CTAs, Social Proof */}
         <div className="hero-left">
           <h1 className="hero-title">
-            DON&apos;T JUST<br />
-            LEARN ENGLISH.<br />
-            <span className="hero-title-highlight">START SPEAKING IT.</span>
+            Ma tbqach ghir<br />
+            kat3ellem l’anglais.<br />
+            <span className="hero-title-highlight">bda kathder biha.</span>
           </h1>
 
           <p className="hero-subtitle">
