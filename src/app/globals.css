@@ -1992,7 +1992,7 @@ body {
     width: 100% !important;
     height: 105% !important;
     max-width: none !important;
-    margin-right: 0 !important;
+    margin-right: 20 !important;
     display: flex !important;
     justify-content: center !important;
     align-items: flex-end !important;
