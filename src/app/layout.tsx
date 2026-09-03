@@ -20,9 +20,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "English with Taha | Don't Just Learn English. Start Speaking It.",
-  description: "A practical program with Taha to help you speak confidently, communicate naturally and actually use your English. 2026/2027 Registration Open!",
-  keywords: ["English with Taha", "Learn English Morocco", "English speaking practice", "English fluency coaching"],
+  title: "Bac English | Learn. Practice. Succeed.",
+  description: "Bac English is a practical program with Taha to help you speak confidently, communicate naturally and actually use your English. 2026/2027 Registration Open!",
+  keywords: ["Bac English", "English with Taha", "Learn English Morocco", "English speaking practice", "English fluency coaching"],
   authors: [{ name: "Taha" }],
 };
 

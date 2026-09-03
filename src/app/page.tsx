@@ -326,9 +326,21 @@ export default function HomePage() {
     <main className="page-container">
       {/* Top Header */}
       <header className="site-header">
-        <div className="program-badge">
-          <Calendar className="w-4 h-4 text-blue-600" />
-          <span>2026 / 2027 PROGRAM</span>
+        <div className="header-brand-group">
+          <a className="site-brand" href="#program" aria-label="Bac English — Home">
+            <Image
+              src="/images/image copy.png"
+              alt="Bac English — Learn, Practice, Succeed"
+              width={558}
+              height={252}
+              priority
+              className="site-brand-logo"
+            />
+          </a>
+          <div className="program-badge">
+            <Calendar className="w-4 h-4 text-blue-600" />
+            <span>2026 / 2027 PROGRAM</span>
+          </div>
         </div>
         <button
           className="mobile-menu-btn"

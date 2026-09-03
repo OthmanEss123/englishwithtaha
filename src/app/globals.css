@@ -84,6 +84,32 @@ body {
   z-index: 40;
 }
 
+.header-brand-group,
+.site-brand {
+  display: flex;
+  align-items: center;
+}
+
+.header-brand-group {
+  gap: 1rem;
+}
+
+.site-brand {
+  color: var(--navy-blue);
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  background: #ffffff;
+  border: 1px solid rgba(219, 234, 254, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 8px 22px rgba(12, 24, 56, 0.1);
+}
+
+.site-brand-logo {
+  display: block;
+  width: 225px;
+  height: auto;
+}
+
 @media (min-width: 768px) {
   .site-header {
     margin-bottom: 2.25rem;
@@ -1761,6 +1787,23 @@ body {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.25rem;
+  }
+
+  .header-brand-group {
+    gap: 0;
+  }
+
+  .site-brand-logo {
+    width: 180px;
+  }
+
+  .site-brand {
+    padding: 0.3rem 0.5rem;
+    border-radius: 13px;
+  }
+
+  .program-badge {
+    display: none;
   }
 
   .mobile-menu-btn {

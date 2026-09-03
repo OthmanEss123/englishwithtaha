@@ -111,4 +111,3 @@ The export includes the existing title, meta description, and favicon. No final 
 - **The domain does not resolve:** verify the domain points to this Hostinger website and wait for DNS propagation.
 - **HTTPS is not active:** confirm DNS points to Hostinger, then check **Websites → Dashboard → Security → SSL**.
 - **A new build fails:** use the locked dependencies with `npm ci`, then resolve build/type/lint errors before uploading anything.
-
