@@ -607,7 +607,7 @@ export default function HomePage() {
                   <div className="form-inputs-group">
                     <div className="form-col-title">Vos informations</div>
                     <div className="input-field-wrap">
-                      <label className="input-label">Prénom &amp; Nom</label>
+                      <label className="input-label">Smytk (Full name)</label>
                       <input
                         type="text"
                         className="text-input"
@@ -626,7 +626,7 @@ export default function HomePage() {
                         <span className="form-step-title">Vos coordonnées (Étudiant 1)</span>
                       </div>
                       <div className="input-field-wrap">
-                        <label className="input-label">Votre Prénom &amp; Nom</label>
+                        <label className="input-label">Smytk (Full name)</label>
                         <input
                           type="text"
                           className="text-input"
@@ -644,7 +644,7 @@ export default function HomePage() {
                         <span className="form-step-title">Coordonnées de votre ami(e) (Étudiant 2)</span>
                       </div>
                       <div className="input-field-wrap">
-                        <label className="input-label">Prénom &amp; Nom de l&apos;ami(e)</label>
+                        <label className="input-label">Smyt Sahbk (Full name)</label>
                         <input
                           type="text"
                           className="text-input"
