@@ -891,7 +891,6 @@ export default function HomePage() {
                 </div>
               ) : (
                 <div className="whatsapp-duo-fields">
-                  <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
                   <div className="input-field-wrap">
                     <label className="input-label">Votre Prénom &amp; Nom *</label>
                     <input
@@ -905,10 +904,7 @@ export default function HomePage() {
                     />
                   </div>
 
-                  <span className="form-section-subtitle" style={{ marginTop: "0.55rem" }}>
-                    👥 Coordonnées de votre ami(e) (Étudiant 2)
-                  </span>
-                  <div className="input-field-wrap">
+                  <div className="input-field-wrap" style={{ marginTop: "0.55rem" }}>
                     <label className="input-label">Prénom &amp; Nom de l&apos;ami(e) *</label>
                     <input
                       type="text"
