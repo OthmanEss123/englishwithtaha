@@ -945,46 +945,6 @@ export default function HomePage() {
                 />
               </div>
 
-              {/* Message Live Preview */}
-              <div className="whatsapp-preview-card">
-                <div className="whatsapp-preview-header">
-                  <span className="whatsapp-preview-tag">Message envoyé à Taha sur WhatsApp</span>
-                </div>
-                <div className="whatsapp-preview-bubble">
-                  {selectedOption === "friend" ? (
-                    <p>
-                      Bonjour Taha ! 👋<br />
-                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Ana O Sahbi) !<br /><br />
-                      👤 <strong>Étudiant 1 :</strong> {modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}<br />
-                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
-                      📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
-                      🎯 <strong>Notre objectif :</strong> {selectedGoal}<br />
-                      {modalCustomMsg.trim() && (
-                        <>
-                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
-                        </>
-                      )}
-                      <br />
-                      Pourriez-vous nous transmettre les détails de l&apos;offre Duo et les disponibilités ? Merci !
-                    </p>
-                  ) : (
-                    <p>
-                      Bonjour Taha ! 👋<br />
-                      Je m&apos;appelle <strong>{modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
-                      Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
-                      🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
-                      👥 <strong>Formule :</strong> Offre Individuelle (Bac Solo)<br />
-                      {modalCustomMsg.trim() && (
-                        <>
-                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
-                        </>
-                      )}
-                      <br />
-                      Pourriez-vous me transmettre les détails de l&apos;offre et les disponibilités ? Merci !
-                    </p>
-                  )}
-                </div>
-              </div>
 
               <button
                 type="submit"
