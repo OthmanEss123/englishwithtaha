@@ -321,7 +321,7 @@ export default function HomePage() {
           </a>
           <div className="program-badge">
             <Calendar className="w-4 h-4 text-blue-600" />
-            <span>2026 / 2027 PROGRAM</span>
+            <span>Bac 2026 / 2027</span>
           </div>
         </div>
         <button
