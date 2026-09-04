@@ -313,8 +313,8 @@ export default function HomePage() {
             <Image
               src="/images/image copy.png"
               alt="Bac English — Learn, Practice, Succeed"
-              width={558}
-              height={252}
+              width={318}
+              height={151}
               priority
               className="site-brand-logo"
             />

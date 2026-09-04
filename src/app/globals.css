@@ -97,17 +97,26 @@ body {
 .site-brand {
   color: var(--navy-blue);
   text-decoration: none;
-  padding: 0.35rem 0.65rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1rem;
   background: #ffffff;
   border: 1px solid rgba(219, 234, 254, 0.9);
   border-radius: 16px;
-  box-shadow: 0 8px 22px rgba(12, 24, 56, 0.1);
+  box-shadow: 0 4px 18px rgba(12, 24, 56, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.site-brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(12, 24, 56, 0.12);
 }
 
 .site-brand-logo {
   display: block;
-  width: 225px;
-  height: auto;
+  height: 58px;
+  width: auto;
+  object-fit: contain;
 }
 
 @media (min-width: 768px) {
@@ -1820,12 +1829,14 @@ body {
   }
 
   .site-brand-logo {
-    width: clamp(125px, 32vw, 155px);
+    height: 46px;
+    width: auto;
+    max-width: 140px;
   }
 
   .site-brand {
-    padding: 0.3rem 0.5rem;
-    border-radius: 13px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 14px;
   }
 
   .program-badge {
