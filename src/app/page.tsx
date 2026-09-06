@@ -69,38 +69,17 @@ export default function HomePage() {
 
     if (selectedOption === "friend") {
       lines = [
-        `Bonjour Taha ! 👋`,
-        ``,
-        `Je souhaite nous inscrire à 2 au programme *English with Taha* (Offre Duo : Bac Duo) !`,
-        ``,
-        `👤 *Étudiant 1 :* ${student1}`,
-        `👥 *Étudiant 2 (Ami/e) :* ${student2}`,
-        `📞 *Numéro de l'ami(e) :* ${fPhone || "Non renseigné"}`,
-        ``,
-        `🎯 *Notre objectif :* ${selectedGoal}`,
+        `Salam 👋 ana ${student1 || "[Prénom & Nom]"} w ${student2 || "[Prénom & Nom de l'ami(e)]"} ${fPhone || "[téléphone]"} bghina n'join BacEnglish`,
       ];
     } else {
       lines = [
-        `Bonjour Taha ! 👋`,
-        ``,
-        `Je m'appelle *${student1}*.`,
-        `Je souhaite rejoindre votre programme *English with Taha*.`,
-        ``,
-        `🎯 *Mon objectif :* ${selectedGoal}`,
-        `👥 *Formule :* Offre Individuelle (Ghir ana)`,
+        `Salam 👋 ana ${student1 || "[Prénom & Nom]"} bghit n'join BacEnglish`,
       ];
     }
 
     if (note) {
-      lines.push(``, `💬 *Message :* ${note}`);
+      lines.push(`💬 ${note}`);
     }
-
-    lines.push(
-      ``,
-      selectedOption === "friend"
-        ? `Pourriez-vous nous transmettre les détails de l'offre Duo et les disponibilités ? Merci !`
-        : `Pourriez-vous me transmettre les détails de l'offre et les disponibilités ? Merci !`
-    );
 
     const message = lines.join("\n");
     return `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
@@ -949,34 +928,14 @@ export default function HomePage() {
                 <div className="whatsapp-preview-bubble">
                   {selectedOption === "friend" ? (
                     <p>
-                      Bonjour Taha ! 👋<br />
-                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Ana O Sahbi) !<br /><br />
-                      👤 <strong>Étudiant 1 :</strong> {modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}<br />
-                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
-                      📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
-                      🎯 <strong>Notre objectif :</strong> {selectedGoal}<br />
-                      {modalCustomMsg.trim() && (
-                        <>
-                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
-                        </>
-                      )}
-                      <br />
-                      Pourriez-vous nous transmettre les détails de l&apos;offre Duo et les disponibilités ? Merci !
+                      Salam 👋 ana {modalFullName.trim() ? modalFullName.trim() : "[Prénom & Nom]"} w{" "}
+                      {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}{" "}
+                      {modalFriendPhone.trim() || "[téléphone]"} bghina n&apos;join BacEnglish
                     </p>
                   ) : (
                     <p>
-                      Bonjour Taha ! 👋<br />
-                      Je m&apos;appelle <strong>{modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
-                      Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
-                      🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
-                      👥 <strong>Formule :</strong> Offre Individuelle (Bac Solo)<br />
-                      {modalCustomMsg.trim() && (
-                        <>
-                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
-                        </>
-                      )}
-                      <br />
-                      Pourriez-vous me transmettre les détails de l&apos;offre et les disponibilités ? Merci !
+                      Salam 👋 ana {modalFullName.trim() ? modalFullName.trim() : "[Prénom & Nom]"} bghit
+                      n&apos;join BacEnglish
                     </p>
                   )}
                 </div>
