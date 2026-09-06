@@ -891,7 +891,6 @@ export default function HomePage() {
                 </div>
               ) : (
                 <div className="whatsapp-duo-fields">
-                  <span className="form-section-subtitle">👤 Vos coordonnées (Étudiant 1)</span>
                   <div className="input-field-wrap">
                     <label className="input-label">Votre Prénom &amp; Nom *</label>
                     <input
@@ -905,10 +904,7 @@ export default function HomePage() {
                     />
                   </div>
 
-                  <span className="form-section-subtitle" style={{ marginTop: "0.55rem" }}>
-                    👥 Coordonnées de votre ami(e) (Étudiant 2)
-                  </span>
-                  <div className="input-field-wrap">
+                  <div className="input-field-wrap" style={{ marginTop: "0.55rem" }}>
                     <label className="input-label">Prénom &amp; Nom de l&apos;ami(e) *</label>
                     <input
                       type="text"
@@ -953,14 +949,34 @@ export default function HomePage() {
                 <div className="whatsapp-preview-bubble">
                   {selectedOption === "friend" ? (
                     <p>
-                      Salam 👋 ana {modalFullName.trim() ? modalFullName.trim() : "[Prénom & Nom]"} w{" "}
-                      {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}{" "}
-                      {modalFriendPhone.trim() || "[téléphone]"} bghina n&apos;join BacEnglish
+                      Bonjour Taha ! 👋<br />
+                      Je souhaite nous inscrire à 2 au programme <em>English with Taha</em> (Offre Duo : Ana O Sahbi) !<br /><br />
+                      👤 <strong>Étudiant 1 :</strong> {modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}<br />
+                      👥 <strong>Étudiant 2 (Ami/e) :</strong> {modalFriendFullName.trim() ? modalFriendFullName.trim() : "[Prénom & Nom de l'ami(e)]"}<br />
+                      📞 <strong>Téléphone ami(e) :</strong> {modalFriendPhone.trim() || "[Numéro de l'ami(e)]"}<br /><br />
+                      🎯 <strong>Notre objectif :</strong> {selectedGoal}<br />
+                      {modalCustomMsg.trim() && (
+                        <>
+                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
+                        </>
+                      )}
+                      <br />
+                      Pourriez-vous nous transmettre les détails de l&apos;offre Duo et les disponibilités ? Merci !
                     </p>
                   ) : (
                     <p>
-                      Salam 👋 ana {modalFullName.trim() ? modalFullName.trim() : "[Prénom & Nom]"} bghit
-                      n&apos;join BacEnglish
+                      Bonjour Taha ! 👋<br />
+                      Je m&apos;appelle <strong>{modalFullName.trim() ? modalFullName.trim() : "[Votre Prénom & Nom]"}</strong>.<br />
+                      Je souhaite rejoindre le programme <em>English with Taha</em>.<br /><br />
+                      🎯 <strong>Mon objectif :</strong> {selectedGoal}<br />
+                      👥 <strong>Formule :</strong> Offre Individuelle (Bac Solo)<br />
+                      {modalCustomMsg.trim() && (
+                        <>
+                          💬 <strong>Message :</strong> {modalCustomMsg.trim()}<br />
+                        </>
+                      )}
+                      <br />
+                      Pourriez-vous me transmettre les détails de l&apos;offre et les disponibilités ? Merci !
                     </p>
                   )}
                 </div>
